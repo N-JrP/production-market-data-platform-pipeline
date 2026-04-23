@@ -1,5 +1,7 @@
 # API Data Pipeline for Market Intelligence
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://api-data-pipeline-p8kwzembqcetk3t3t3tb7b.streamlit.app/)
+
 Data pipeline for ingesting external data from a public API, transforming it into structured datasets, and enabling analytics for decision-making.
 
 ## Business Problem
