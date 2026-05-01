@@ -1,19 +1,38 @@
 import streamlit as st
 import duckdb
 import pandas as pd
+from pathlib import Path
 
-DB_FILE = "warehouse/analytics.duckdb"
+DB_FILE = Path("warehouse/analytics.duckdb")
 
-st.set_page_config(page_title="API Data Pipeline for Market Intelligence", layout="wide")
+st.set_page_config(
+    page_title="Production Data Platform for Market Intelligence",
+    page_icon="🏗️",
+    layout="wide",
+)
 
-st.title("Production Data Platform for Market Intelligence")
+st.title("🏗️ Production Data Platform for Market Intelligence")
+
 st.write(
     "Production-style data platform that ingests exchange-rate data from a public API, "
-    "orchestrates workflows, validates data quality, stores analytics in DuckDB, "
+    "runs automated pipeline steps, validates data quality, stores analytics-ready data in DuckDB, "
     "and provides dashboard insights for decision-making."
 )
 
-conn = duckdb.connect(DB_FILE)
+st.info(
+    "Platform capabilities: API ingestion • workflow orchestration with Airflow • "
+    "containerized execution with Docker • CI/CD with GitHub Actions • "
+    "data validation • historical monitoring"
+)
+
+if not DB_FILE.exists():
+    st.error(
+        "DuckDB warehouse not found. Please run the pipeline first using "
+        "`python src/run_pipeline.py` or `docker compose up --build pipeline`."
+    )
+    st.stop()
+
+conn = duckdb.connect(str(DB_FILE))
 
 exchange_rates_df = conn.execute("""
     SELECT *
@@ -75,6 +94,24 @@ col3.metric("Pipeline Runs", len(run_history_df))
 
 st.divider()
 
+st.subheader("Pipeline System Overview")
+
+overview_col1, overview_col2, overview_col3 = st.columns(3)
+
+with overview_col1:
+    st.markdown("**Orchestration**")
+    st.write("Airflow DAG controls ingestion, transformation, validation, and analytics steps.")
+
+with overview_col2:
+    st.markdown("**Containerization**")
+    st.write("Docker Compose runs the pipeline and dashboard in reproducible environments.")
+
+with overview_col3:
+    st.markdown("**Automation**")
+    st.write("GitHub Actions validates the pipeline during CI/CD execution.")
+
+st.divider()
+
 st.subheader("Filters")
 all_categories = ["All"] + sorted(latest_snapshot_df["rate_category"].dropna().unique().tolist())
 selected_category = st.selectbox("Filter by rate category", all_categories)
@@ -90,6 +127,7 @@ st.divider()
 
 st.subheader("Rate Summary")
 st.dataframe(summary_df, use_container_width=True)
+
 if not summary_df.empty:
     st.bar_chart(summary_df.set_index("rate_category")["currency_count"])
 
@@ -113,6 +151,12 @@ st.dataframe(run_history_df, use_container_width=True)
 st.divider()
 
 st.subheader("Business Value")
-st.write("- Demonstrates external API ingestion for production-style pipelines")
-st.write("- Converts raw API responses into structured, analytics-ready datasets")
-st.write("- Supports historical tracking of pipeline runs for monitoring and reporting")
+st.markdown(
+    """
+- Demonstrates production-style data engineering with orchestration, containerization, and CI/CD
+- Converts raw API responses into structured, analytics-ready datasets
+- Tracks historical pipeline executions for monitoring and operational visibility
+- Shows cloud-ready system design using S3-style storage and Terraform infrastructure definition
+- Provides a reproducible dashboard layer for business-facing analytics
+"""
+)
