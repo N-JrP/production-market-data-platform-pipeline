@@ -1,12 +1,8 @@
 # 🏗️ Production Data Platform for Market Intelligence
 
-<<<<<<< HEAD
-End-to-end production-style data platform that ingests external API data, orchestrates workflows, validates quality, and delivers analytics through an automated pipeline system.
-=======
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://api-data-pipeline-p8kwzembqcetk3t3t3tb7b.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://market-data-platform-pipeline-lr4zz9sacfdf9hr59h4f6i.streamlit.app/)
 
-Data pipeline for ingesting external data from a public API, transforming it into structured datasets, and enabling analytics for decision-making.
->>>>>>> b94ece1e6024ec4e3934261a73c653a112f8ae5f
+End-to-end production-style data platform that ingests external API data, orchestrates workflows, validates quality, and delivers analytics through an automated pipeline system.
 
 ---
 
@@ -126,7 +122,6 @@ The pipeline was successfully executed inside Docker, demonstrating containerize
 Activate environment:
 
 conda activate doc_rag_project
-<<<<<<< HEAD
 
 Run pipeline:
 
@@ -154,8 +149,4 @@ A fully automated data platform that:
 - Orchestrating workflows with Airflow  
 - Containerizing data systems with Docker  
 - Implementing CI/CD for data pipelines  
-- Designing scalable, cloud-ready architectures
-=======
-python src\run_pipeline.py
-streamlit run src\app.py
->>>>>>> b94ece1e6024ec4e3934261a73c653a112f8ae5f
+- Designing scalable, cloud-ready architectures  
