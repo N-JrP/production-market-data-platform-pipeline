@@ -6,8 +6,12 @@ DB_FILE = "warehouse/analytics.duckdb"
 
 st.set_page_config(page_title="API Data Pipeline for Market Intelligence", layout="wide")
 
-st.title("API Data Pipeline for Market Intelligence")
-st.write("Ingests external exchange-rate data from a public API, stores it in DuckDB, and provides analytics for decision-making.")
+st.title("Production Data Platform for Market Intelligence")
+st.write(
+    "Production-style data platform that ingests exchange-rate data from a public API, "
+    "orchestrates workflows, validates data quality, stores analytics in DuckDB, "
+    "and provides dashboard insights for decision-making."
+)
 
 conn = duckdb.connect(DB_FILE)
 
