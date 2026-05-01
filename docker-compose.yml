@@ -1,0 +1,20 @@
+services:
+  pipeline:
+    build: .
+    container_name: market-data-pipeline
+    volumes:
+      - ./data:/app/data
+      - ./warehouse:/app/warehouse
+      - ./logs:/app/logs
+    command: python src/run_pipeline.py
+
+  dashboard:
+    build: .
+    container_name: market-data-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./warehouse:/app/warehouse
+      - ./logs:/app/logs
+    command: streamlit run src/app.py --server.address=0.0.0.0
