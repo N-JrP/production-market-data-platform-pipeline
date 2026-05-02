@@ -2,32 +2,31 @@
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://market-data-platform-pipeline-lr4zz9sacfdf9hr59h4f6i.streamlit.app/)
 
-End-to-end production-style data platform that ingests external API data, orchestrates workflows, validates quality, and delivers analytics through an automated pipeline system.
+End-to-end production-style data platform for ingesting external exchange-rate API data, organizing it in a data lake structure, validating quality, storing analytics-ready data, and visualizing insights through a Streamlit dashboard.
 
 ---
 
 ## 💼 Business Problem
 
-Organizations rely on external API data (e.g., exchange rates) for reporting and decision-making.  
-However, raw API data is:
-- unstructured  
-- inconsistent  
-- not analytics-ready  
-- lacks reliability and monitoring  
+Organizations rely on external API data for reporting and decision-making.  
+Raw API data is often inconsistent, not analytics-ready, and lacks operational visibility.
 
-Modern data teams require automated, reliable, and production-grade pipelines to transform this data into usable insights.
+This project demonstrates how raw external data can be processed through a reliable, reproducible, and cloud-ready data engineering workflow.
 
 ---
 
 ## 💡 Solution
 
-This project evolves a simple API pipeline into a production-ready data platform by integrating:
+The project implements a production-style data pipeline with:
 
-- Workflow orchestration  
-- Containerization  
-- Automated execution (CI/CD)  
-- Data validation and logging  
-- Cloud-ready data lake architecture  
+- API-based data ingestion
+- S3-style local data lake with raw and processed zones
+- Data transformation and validation
+- DuckDB analytical storage
+- Airflow workflow orchestration
+- Docker-based reproducible execution
+- GitHub Actions CI/CD
+- Streamlit analytics dashboard
 
 ---
 
@@ -35,21 +34,21 @@ This project evolves a simple API pipeline into a production-ready data platform
 
 Exchange Rate API  
         ↓  
-Ingestion (Python)  
+Python Ingestion  
         ↓  
-Raw Data Lake (S3-style local storage)  
+Raw Data Lake (`data_lake/raw/`)  
         ↓  
-Airflow DAG (Orchestration)  
+Airflow DAG  
         ↓  
-Transformation (DuckDB processing)  
+Transformation and Validation  
         ↓  
-Processed Data Lake  
+Processed Data Lake (`data_lake/processed/`)  
         ↓  
-Analytics Layer  
+DuckDB Analytics Warehouse  
         ↓  
 Streamlit Dashboard  
         ↓  
-CI/CD (GitHub Actions)
+GitHub Actions CI/CD
 
 ---
 
@@ -59,104 +58,100 @@ This project includes an S3-style local data lake to simulate cloud-based storag
 
 - Raw API responses are stored in `data_lake/raw/`
 - Cleaned datasets are stored in `data_lake/processed/`
-- Separation of raw and processed zones improves scalability and auditability
-- Designed for easy migration to AWS S3 or other cloud object storage systems
+- Raw and processed zones improve scalability, traceability, and auditability
+- The structure follows data lake design patterns and can be extended to cloud object storage such as AWS S3
 
 ---
 
 ## 🔑 Key Features
 
-- Automated data pipeline orchestration using Apache Airflow  
-- Containerized execution using Docker and Docker Compose  
-- CI/CD pipeline using GitHub Actions  
-- Data lake architecture with raw and processed zones  
-- Data transformation using DuckDB  
-- Data validation and pipeline logging  
-- Historical tracking of pipeline runs  
-- Interactive analytics dashboard using Streamlit  
-
----
-
-## 📊 Business Impact
-
-- Demonstrates production-grade data engineering practices  
-- Converts raw API data into analytics-ready datasets  
-- Enables automated, repeatable workflows  
-- Improves data reliability and monitoring  
-- Simulates cloud-ready system design used in modern data platforms  
+- Automated workflow structure using Apache Airflow
+- Containerized pipeline and dashboard using Docker Compose
+- CI/CD workflow using GitHub Actions
+- Data lake layout with raw and processed zones
+- Data transformation and validation using Python and DuckDB
+- Historical pipeline tracking
+- Live Streamlit dashboard for analytics and monitoring
 
 ---
 
 ## 🛠️ Tech Stack
 
-Core Data Stack:  
-Python • SQL • DuckDB • Pandas  
-
-Data Engineering & Platform:  
-Apache Airflow • Docker • GitHub Actions  
-
-Processing & Streaming (Conceptual):  
-Event-driven ingestion (Kafka-style simulation)  
-
-Storage & Infrastructure:  
-S3-style Data Lake • Terraform (infrastructure-as-code concept)  
-
-Visualization:  
-Streamlit  
+**Languages:** Python, SQL  
+**Data Engineering:** ETL/ELT, Data Modeling, Data Validation  
+**Orchestration:** Apache Airflow  
+**Storage:** DuckDB, S3-style Data Lake  
+**Deployment:** Docker, Docker Compose  
+**Automation:** GitHub Actions  
+**Visualization:** Streamlit  
+**Infrastructure Concept:** Terraform
 
 ---
 
 ## 🐳 Docker Setup
 
-Run the full pipeline:
+Run the pipeline:
 
+```bash
 docker compose up --build pipeline
+```
 
 Run the dashboard:
 
+```bash
 docker compose up --build dashboard
+```
 
 ---
 
 ## 🖥️ Docker Execution Preview
 
-The pipeline was successfully executed inside Docker, demonstrating containerized data processing and orchestration.
+The pipeline was successfully executed inside Docker, demonstrating containerized data processing and reproducible execution.
 
 ![Docker Pipeline Run](images/docker_pipeline_run.png)
 
 ---
 
-## ▶️ Run Locally (without Docker)
+## ▶️ Run Locally
 
 Activate environment:
 
+```bash
 conda activate doc_rag_project
+```
 
 Run pipeline:
 
+```bash
 python src/run_pipeline.py
+```
 
 Run dashboard:
 
+```bash
 streamlit run src/app.py
+```
 
 ---
 
 ## 📌 Project Outcome
 
-A fully automated data platform that:
-- ingests real-time API data  
-- stores raw and processed data in a data lake  
-- transforms and validates datasets  
-- and delivers analytics through a dashboard  
+Built a production-style market data platform that:
+
+- ingests exchange-rate API data
+- stores raw and processed data in a data lake structure
+- validates and transforms data into analytics-ready outputs
+- stores analytical data in DuckDB
+- provides dashboard insights through Streamlit
+- supports reproducible execution through Docker and CI/CD
 
 ---
 
 ## 🧠 Key Learnings
 
-- Building production-style data pipelines  
-- Designing data lake architectures (raw vs processed zones)  
-- Orchestrating workflows with Airflow  
-- Containerizing data systems with Docker  
-- Implementing CI/CD for data pipelines  
-- Designing cloud-ready data platforms  
+- Designing production-style data pipelines
+- Structuring raw and processed data lake zones
+- Building cloud-ready data engineering workflows
+- Orchestrating pipeline steps with Airflow
+- Containerizing data applications with Docker
+- Automating validation with CI/CD
