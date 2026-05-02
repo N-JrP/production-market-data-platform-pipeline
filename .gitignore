@@ -1,0 +1,9 @@
+data/
+data_lake/
+warehouse/
+logs/
+*.duckdb
+*.csv
+*.json
+__pycache__/
+.env

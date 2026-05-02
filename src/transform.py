@@ -1,36 +1,57 @@
+import sys
+from pathlib import Path
+
 import pandas as pd
 
-INPUT_FILE = "data/raw/exchange_rates.csv"
-OUTPUT_FILE = "data/processed/exchange_rates_cleaned.csv"
 
-def categorize_rate(rate):
-    if rate >= 1.5:
-        return "high"
-    elif rate >= 0.5:
-        return "medium"
-    return "low"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.append(str(PROJECT_ROOT))
 
-def main():
-    df = pd.read_csv(INPUT_FILE)
+from config.cloud_config import PROCESSED_ZONE
 
-    df["rate"] = df["rate"].round(4)
+
+RAW_FILE = PROJECT_ROOT / "data" / "raw" / "exchange_rates.csv"
+LOCAL_PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+LOCAL_PROCESSED_FILE = LOCAL_PROCESSED_DIR / "exchange_rates_cleaned.csv"
+LAKE_PROCESSED_FILE = PROCESSED_ZONE / "exchange_rates_cleaned.csv"
+
+LOCAL_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def categorize_rate(rate: float) -> str:
+    if rate < 1:
+        return "Low"
+    if rate <= 10:
+        return "Medium"
+    return "High"
+
+
+def main() -> None:
+    df = pd.read_csv(RAW_FILE)
+
+    df["rate"] = pd.to_numeric(df["rate"], errors="coerce")
+    df = df.dropna(subset=["currency", "rate"])
+
     df["rate_category"] = df["rate"].apply(categorize_rate)
-    df["is_strong_vs_usd"] = df["rate"].apply(lambda x: "yes" if x > 1 else "no")
 
-    df = df[
-        [
-            "currency",
-            "rate",
-            "rate_category",
-            "is_strong_vs_usd",
-            "base",
-            "api_date",
-            "ingested_at",
-        ]
+    selected_columns = [
+        "currency",
+        "rate",
+        "base",
+        "base_currency",
+        "api_date",
+        "ingested_at",
+        "rate_category",
     ]
 
-    df.to_csv(OUTPUT_FILE, index=False)
-    print(f"Cleaned data saved to {OUTPUT_FILE}")
+    df = df[selected_columns]
+
+    df.to_csv(LOCAL_PROCESSED_FILE, index=False)
+    df.to_csv(LAKE_PROCESSED_FILE, index=False)
+
+    print(f"Cleaned data saved locally to: {LOCAL_PROCESSED_FILE}")
+    print(f"Cleaned data saved to data lake: {LAKE_PROCESSED_FILE}")
+
 
 if __name__ == "__main__":
     main()

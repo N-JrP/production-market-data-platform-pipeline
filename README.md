@@ -27,7 +27,7 @@ This project evolves a simple API pipeline into a production-ready data platform
 - Containerization  
 - Automated execution (CI/CD)  
 - Data validation and logging  
-- Scalable storage design  
+- Cloud-ready data lake architecture  
 
 ---
 
@@ -37,15 +37,13 @@ Exchange Rate API
         ↓  
 Ingestion (Python)  
         ↓  
-Simulated Streaming Layer (event batches)  
-        ↓  
-Raw Storage (S3-style local storage)  
+Raw Data Lake (S3-style local storage)  
         ↓  
 Airflow DAG (Orchestration)  
         ↓  
 Transformation (DuckDB processing)  
         ↓  
-Data Validation + Logging  
+Processed Data Lake  
         ↓  
 Analytics Layer  
         ↓  
@@ -55,16 +53,27 @@ CI/CD (GitHub Actions)
 
 ---
 
+## ☁️ Cloud-Ready Data Lake Design
+
+This project includes an S3-style local data lake to simulate cloud-based storage architecture.
+
+- Raw API responses are stored in `data_lake/raw/`
+- Cleaned datasets are stored in `data_lake/processed/`
+- Separation of raw and processed zones improves scalability and auditability
+- Designed for easy migration to AWS S3 or other cloud object storage systems
+
+---
+
 ## 🔑 Key Features
 
-- Automated data pipeline orchestrated with Apache Airflow  
-- Containerized environment using Docker  
+- Automated data pipeline orchestration using Apache Airflow  
+- Containerized execution using Docker and Docker Compose  
 - CI/CD pipeline using GitHub Actions  
-- Simulated real-time ingestion (Kafka-style batching)  
+- Data lake architecture with raw and processed zones  
 - Data transformation using DuckDB  
 - Data validation and pipeline logging  
-- Historical data tracking for auditability  
-- Interactive analytics dashboard with Streamlit  
+- Historical tracking of pipeline runs  
+- Interactive analytics dashboard using Streamlit  
 
 ---
 
@@ -74,7 +83,7 @@ CI/CD (GitHub Actions)
 - Converts raw API data into analytics-ready datasets  
 - Enables automated, repeatable workflows  
 - Improves data reliability and monitoring  
-- Simulates real-world system design used in industry  
+- Simulates cloud-ready system design used in modern data platforms  
 
 ---
 
@@ -90,7 +99,7 @@ Processing & Streaming (Conceptual):
 Event-driven ingestion (Kafka-style simulation)  
 
 Storage & Infrastructure:  
-S3-style storage (local simulation) • Terraform (infrastructure-as-code concept)  
+S3-style Data Lake • Terraform (infrastructure-as-code concept)  
 
 Visualization:  
 Streamlit  
@@ -137,8 +146,8 @@ streamlit run src/app.py
 
 A fully automated data platform that:
 - ingests real-time API data  
-- processes and validates it  
-- stores structured datasets  
+- stores raw and processed data in a data lake  
+- transforms and validates datasets  
 - and delivers analytics through a dashboard  
 
 ---
@@ -146,7 +155,8 @@ A fully automated data platform that:
 ## 🧠 Key Learnings
 
 - Building production-style data pipelines  
+- Designing data lake architectures (raw vs processed zones)  
 - Orchestrating workflows with Airflow  
 - Containerizing data systems with Docker  
 - Implementing CI/CD for data pipelines  
-- Designing scalable, cloud-ready architectures  
+- Designing cloud-ready data platforms  
