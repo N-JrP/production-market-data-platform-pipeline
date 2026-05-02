@@ -1,9 +1,23 @@
-data/
-data_lake/
-warehouse/
-logs/
+# Ignore generated data
+data/*
+data_lake/raw/*
+data_lake/processed/*
+warehouse/*
+logs/*
+
+# Keep folder structure
+!data/.gitkeep
+!data_lake/raw/.gitkeep
+!data_lake/processed/.gitkeep
+!warehouse/.gitkeep
+!logs/.gitkeep
+
+# Ignore file types
 *.duckdb
 *.csv
 *.json
+
+# Python/cache
 __pycache__/
+*.pyc
 .env
